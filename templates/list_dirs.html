@@ -5,6 +5,6 @@
 <body>
 <h1>List Directories</h1>
 {% for dir in dirs %}
-<a href="{{ dir }}">{{ dir_names[loop.index] }}</a><br>
+<a href="{{ dir['query'] }}">{{ dir['name'] }}</a><br>
 {% endfor %}
 </body>

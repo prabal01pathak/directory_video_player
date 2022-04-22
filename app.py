@@ -38,12 +38,16 @@ async def list_dirs(query: str, request: Request):
             query = f"video/?query={path_to_file}"
         if os.path.isdir(path_to_file):
             query = f"list_dirs/?query={path_to_file}"
-        ls.append(query)
+        #ls.append(query)
         name = i.split("/")[0]
-        dir_names.append(name)
-    return  templates.TemplateResponse("list_dirs.html", {"request": request, 
-                                                          "dirs": ls, 
-                                                          "dir_names": dir_names})
+        dictonary = {"name": name, "query": query}
+        #dir_names.append(name)
+        ls.append(dictonary)
+    print(ls)
+    return  templates.TemplateResponse("list_dirs.html", 
+                                       {"request": request, 
+                                        "dirs": ls, 
+                                       })
 
 
 @app.get("/video_stream")
