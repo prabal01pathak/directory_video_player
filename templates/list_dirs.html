@@ -1,10 +1,106 @@
 <html>
 <head>
     <title>List Directories</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <style>
+body {
+    background: #4527A0
+}
+
+.list-group {
+    width: 400px !important
+}
+
+.list-group-item {
+    margin-top: 10px;
+    border-radius: none;
+    background: #5E35B1;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out
+}
+
+.list-group-item:hover {
+    transform: scaleX(1.1)
+}
+
+.check {
+    opacity: 0;
+    transition: all 0.6s ease-in-out
+}
+
+.list-group-item:hover .check {
+    opacity: 1
+}
+
+.about span {
+    font-size: 12px;
+    margin-right: 10px
+}
+
+input[type=checkbox] {
+    position: relative;
+    cursor: pointer
+}
+
+input[type=checkbox]:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0px;
+    left: 0;
+    border: 1px solid #10a3f9;
+    border-radius: 3px;
+    background-color: white
+}
+
+input[type=checkbox]:checked:after {
+    content: "";
+    display: block;
+    width: 7px;
+    height: 12px;
+    border: solid #007bff;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    top: 2px;
+    left: 6px
+}
+
+input[type="checkbox"]:checked+.check {
+    opacity: 1
+}
+a {
+    color: #fff;
+    text-decoration: none;
+}
+a:hover {
+    color: #ff2b2b;
+}
+
+    </style>
 </head>
 <body>
-<h1>List Directories</h1>
-{% for dir in dirs %}
-<a href="{{ dir['query'] }}">{{ dir['name'] }}</a><br>
-{% endfor %}
+    <div class="container d-flex justify-content-center">
+         <ul class="list-group mt-5 text-white">
+        {% for dir in dirs %}
+            <li class="list-group-item d-flex justify-content-between align-content-center">
+                <div class="d-flex flex-row"> 
+                    {% if dir['file_type'] == 'folder' %}
+                    <img src="https://img.icons8.com/color/100/000000/folder-invoices.png" width="40" />
+                    {% else %}
+                        <img src="https://img.icons8.com/color/100/000000/file.png" width="40" />
+                    {% endif %}
+                    <span class="ml-2">
+                      <h6 class="mb-0"><a href="{{ dir['query'] }}">{{ dir['name'] }}</a></h6>
+                    </span>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
 </body>
