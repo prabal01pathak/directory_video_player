@@ -27,17 +27,23 @@ async def root():
     return {"message": "Hello World"}
 
 @app.get("/list_dirs")
-async def list_dirs(query_path: str, request: Request):
-    paths = path / query_path
+async def list_dirs(query: str, request: Request):
+    paths = path / query
     total_dirs = os.listdir(paths)
     ls = []
+    dir_names = []
     for i in total_dirs:
         path_to_file = paths / i
-        query = f"video/?query={path_to_file}"
+        if os.path.isfile(path_to_file):
+            query = f"video/?query={path_to_file}"
+        if os.path.isdir(path_to_file):
+            query = f"list_dirs/?query={path_to_file}"
         ls.append(query)
-    print(ls)
+        name = i.split(".")[0]
+        dir_names.append(name)
     return  templates.TemplateResponse("list_dirs.html", {"request": request, 
-                                                          "dirs": ls})
+                                                          "dirs": ls, 
+                                                          "dir_names": dir_names})
 
 
 @app.get("/video_stream")
