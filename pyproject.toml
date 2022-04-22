@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "video_player"
+version = "0.1.0"
+description = ""
+authors = ["prabal <prabal01pathak@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
