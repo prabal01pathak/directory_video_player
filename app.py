@@ -39,7 +39,7 @@ async def list_dirs(query: str, request: Request):
         if os.path.isdir(path_to_file):
             query = f"list_dirs/?query={path_to_file}"
         ls.append(query)
-        name = i.split(".")[0]
+        name = i.split("/")[0]
         dir_names.append(name)
     return  templates.TemplateResponse("list_dirs.html", {"request": request, 
                                                           "dirs": ls, 
