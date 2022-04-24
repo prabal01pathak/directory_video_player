@@ -10,7 +10,7 @@ import subprocess
 
 app = FastAPI()
 
-path = Path("C:/Users/hp/Downloads/kosamba_bottle_counting/")
+path = Path("C:/Users/") #Downloads/kosamba_bottle_counting/")
 app.mount("/static", StaticFiles(directory=path), name="static")
 templates = Jinja2Templates(directory="templates")
 
@@ -21,7 +21,7 @@ def stream_from_file(file_path):
         if not success:
             break
         frame = cv2.imencode('.jpg', frame)[1].tobytes()
-        time.sleep(0.02)
+        time.sleep(0.01)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
@@ -38,7 +38,7 @@ async def list_dirs(query: str, request: Request):
     for i in total_dirs:
         path_to_file = paths / i
         if os.path.isfile(path_to_file):
-            query = f"video_ffplay/?query={path_to_file}"
+            query = f"video_stream/?query={path_to_file}"
         if os.path.isdir(path_to_file):
             query = f"list_dirs/?query={path_to_file}"
         name = i.split("/")[0]
@@ -69,14 +69,14 @@ async def stream(request: Request, query: str):
     path_str = str(video_path)
     return StreamingResponse(open(path_str, 'rb'), media_type='video/mp4')
 
-@app.get("/video_ffplay")
+@app.get("/video_vlc")
 async def video_html(query: str, request: Request, background_task: BackgroundTasks):
     full_path = path / query
     full_path = full_path.parent
     str_path = str(full_path)
     current_path = os.getcwd()
     os.chdir("C:\Program Files\VideoLAN\VLC")
-    os.system(f"vlc {str_path} --video-on-top --play-and-exit")
+    os.system(f"vlc --play-and-exit {str_path} --video-on-top ")
     return_path = f"list_dirs/?query={full_path}"
     os.chdir(current_path)
     return RedirectResponse(url=return_path)
